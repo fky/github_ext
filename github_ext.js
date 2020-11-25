@@ -78,22 +78,26 @@
       if (isBlank(issue_data)) { return; }
 
       const
-        flex = issue_item.children().first().children().filter('div.flex-shrink-0').last(),
+        row = issue_item.children().first(),
         projects = issue_data['projects'];
 
-      flex.find('.ext-project').remove();
+      let project_col = row.find('.ext-project-col');
+      if (isBlank(project_col)) {
+        project_col = jq(`<div class='flex-shrink-0 pt-2 pr-2 d-flex hide-sm col-2 ext-project-col'></div>`);
+        project_col.insertBefore(row.children().filter('div.flex-shrink-0').last())
+      }
+
+      project_col.empty();
 
       if (isBlank(projects)) { return; }
 
-      flex.removeClass('col-3').addClass('col-5');
-
       // 只render 第一个
       const project_data = projects[0];
-      const project_info = jq(`<span class='ml-2 flex-1 flex-shrink-0 text-left ext-project'><span>`);
+      const project_info = jq(`<div class='ml-2 flex-auto text-right'><div>`);
       project_info
         .append(`<div>${project_data.title}</div>`)
         .append(`<div class='text-small text-gray'>${project_data.column}</div>`)
-        .insertBefore(flex.children().first())
+        .appendTo(project_col);
     }
   }
 
