@@ -1,8 +1,8 @@
 ---
-name: Bug report
+name: 生产Bug
 about: Create a report to help us improve
-title: ''
-labels: ''
+title: "[BUG]"
+labels: bug
 assignees: ''
 
 ---
